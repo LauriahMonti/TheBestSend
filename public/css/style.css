@@ -1,0 +1,9 @@
+h1{
+    color: #0c5460;
+    border-bottom: 1px solid #0c5460;
+}
+.part{
+    border: 1px solid #5a6268;
+    border-radius: 15px;
+    padding: 10px;
+}
