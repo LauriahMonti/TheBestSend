@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Connexion/Inscription{% endblock %}
+
+{% block body %}
+    <div class = "container">
+    <div class = "row">
+        <div class = "col-md-6">
+            <div class="part">
+
+                <h1><i class="fas fa-user"></i> Connexion</h1>
+            {# Ici vien la partie connexion #}
+
+             {% include ('users/connexion.html.twig') %}
+            </div>
+
+        </div>
+        <div class = "col-md-6">
+            <div class="part">
+            <h1><i class="fas fa-user-plus"></i> Inscription</h1>
+            {# Ici vien la partie Inscription #}
+             {%  include ('users/inscription.html.twig') %}
+            </div>
+        </div>
+    </div>
+    </div>
+{% endblock %}
