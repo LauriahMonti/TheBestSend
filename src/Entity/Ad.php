@@ -2,7 +2,9 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\AdRepository")
@@ -17,34 +19,55 @@ class Ad
     private $id;
 
     /**
+     * @Assert\Length(
+     *     min="2", max="255",
+     *     minMessage="Deux caractères minimum.",
+     *     maxMessage="255 caractères maximum"
+     * )
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $Description;
+    private $description;
 
     /**
+     * @Assert\NotBlank(message="Veuillez renseignez un titre !")
+     * @Assert\Length(
+     *     min="2", max="255",
+     *     minMessage="Deux caractères minimum",
+     *     maxMessage="255 caractères maximum"
+     * )
      * @ORM\Column(type="string", length=255)
      */
-    private $Title;
+    private $title;
 
     /**
+     * @Assert\NotBlank(message="Veuillez renseignez votre ville !")
      * @ORM\Column(type="string", length=55)
      */
     private $city;
 
     /**
+     * @Assert\NotBlank(message="Veuillez renseignez votre code postal !")
      * @ORM\Column(type="string", length=55)
      */
     private $zip;
 
     /**
-     * @ORM\Column(type="integer", nullable=true)
+     * @Assert\NotBlank(message="Veuillez renseignez un prix !")
+     * @Assert\Type(type="float", message="Renseignez un nombre OK")
+     * @ORM\Column(type="float")
      */
     private $price;
 
     /**
-     * @ORM\Column(type="datetime", nullable=true)
+     * @ORM\Column(type="datetime")
      */
     private $dateCreated;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Category", inversedBy="ads")
+     */
+    private $category;
+
 
     public function getId(): ?int
     {
@@ -53,24 +76,24 @@ class Ad
 
     public function getDescription(): ?string
     {
-        return $this->Description;
+        return $this->description;
     }
 
     public function setDescription(?string $Description): self
     {
-        $this->Description = $Description;
+        $this->description = $Description;
 
         return $this;
     }
 
     public function getTitle(): ?string
     {
-        return $this->Title;
+        return $this->title;
     }
 
     public function setTitle(string $Title): self
     {
-        $this->Title = $Title;
+        $this->title = $Title;
 
         return $this;
     }
@@ -99,12 +122,12 @@ class Ad
         return $this;
     }
 
-    public function getPrice(): ?int
+    public function getPrice(): ?float
     {
         return $this->price;
     }
 
-    public function setPrice(int $price): self
+    public function setPrice(float $price): self
     {
         $this->price = $price;
 
@@ -122,4 +145,19 @@ class Ad
 
         return $this;
     }
+
+
+    public function getCategory(): ?Category
+    {
+        return $this->category;
+    }
+
+    public function setCategory(?Category $category): self
+    {
+        $this->category = $category;
+
+        return $this;
+    }
+
+
 }

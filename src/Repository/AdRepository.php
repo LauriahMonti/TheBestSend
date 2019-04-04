@@ -18,7 +18,58 @@ class AdRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Ad::class);
     }
+    public function searchCategory($name)
+    {
+        $dql = '
+            SELECT a, c
+            FROM App\Entity\Ad a
+            INNER JOIN a.category c
+            WHERE c.name LIKE :name
+        ';
 
+        return $this
+            ->getEntityManager()
+            ->createQuery($dql)
+            ->setParameter(
+                'name',
+                '%'.$name.'%')
+            ->getResult();
+
+    }
+
+    public function findAllJoinCategory()
+    {
+        $dql = '
+            SELECT a, c
+            FROM App\Entity\Ad a
+            LEFT JOIN a.category c 
+        ';
+
+        return $this
+            ->getEntityManager()
+            ->createQuery($dql)
+            ->getResult();
+
+    }
+    public function search($zip)
+    {
+        $dql = '
+            SELECT ad 
+            FROM App\Entity\Ad ad 
+            WHERE ad.zip LIKE :zip
+            ORDER BY ad.dateCreated ASC
+        ';
+
+        return $this
+            ->getEntityManager()
+            ->createQuery($dql)
+            ->setParameter(
+                'zip',
+                '%'.$zip.'%'
+            )
+            ->getResult();
+
+    }
     // /**
     //  * @return Ad[] Returns an array of Ad objects
     //  */
