@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+
+{% block body %}
+    <div class="container">
+        <h1>Rechercher une annonce</h1>
+        <div>
+            <form id="zip" action ="{{  path('annoncesearchZip')}}">
+                <div class="form-group">
+                    <label for="zip"><i class="fas fa-search"></i>Votre recherche : </label>
+                    <input type="text" class="form-control" id="zip" name="zip">
+                </div>
+                <div class="row">
+                <div class = "col-md-12 text-center">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+        </div>
+            </form>
+            {# <form id ="category" action="{{ path('annonceviewCat') }}"></form>
+                <div class="form-group">
+                    <select name="category">
+                        <option></option>
+                        {% for categorie in category %}
+                        <option>{{ categorie.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="row">
+                    <div class = "col-md-12 text-center">
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+            </form>#}
+        </div>
+            <div>
+                <ul>
+                    {% for annonce in annonces %}
+                        <li class="ann">
+                            <p>Titre : {{ annonce.title }}</p>
+                            <p>Description : {{ annonce.description }}</p>
+                            <p>Prix : {{ annonce.price }}</p>
+                            <button type="submit" ><a href="{{ path('annoncedetails', {id:annonce.id}) }}"><i class="fas fa-info-circle">Details</i></a></button>
+                        </li>
+
+                    {% endfor %}
+                </ul>
+            </div>
+
+    </div>
+{% endblock %}

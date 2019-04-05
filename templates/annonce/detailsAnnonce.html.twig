@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Annonce - {{ parent() }}{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1>Details</h1>
+        <p>Titre : {{ annonce.Title }}</p>
+        <br>
+        <p>Description : {{ annonce.Description }}</p>
+        <br>
+        <p>Ville : {{ annonce.city }}</p>
+        <br>
+        <p>Code Postal : {{ annonce.zip }}</p>
+        <br>
+        <p>Prix : {{ annonce.price }}</p>
+        <br>
+         <p>Categorie : {{ annonce.category }}</p>
+        <br>
+        <p>Date de mis en ligne : {{ annonce.dateCreated|date('d/m/Y') }}</p>
+    </div>
+{% endblock %}

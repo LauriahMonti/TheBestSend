@@ -12,9 +12,11 @@
         </div>
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
-                <li class="active"><a href="#">Deposer <span class="sr-only">(current)</span></a></li>
-                <li><a href="#">Rechercher</a></li>
-                <li><a href="{{ path('users') }}">Connexion/Inscription</a></li>
+                <li class="active"><a href="{{ path('annoncecreer') }}">Deposer <span class="sr-only">(current)</span></a></li>
+                <li><a href="{{ path('annoncerecherche') }}">Rechercher</a></li>
+                <li><a href="{{ path('app_login') }}">Connexion</a></li>
+
+                <li><a href="{{ path('app_register') }}">Inscription</a></li>
             </ul>
         </div>
     </div>

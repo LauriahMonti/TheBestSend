@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}AjouterUneAnnonce - {{ parent() }}{% endblock %}
+
+{% block body %}
+    <div class="container">
+    <h1>Ajouter votre annonce ici</h1>
+        <div id="part">
+            {{ form_start(form) }}
+
+            {{ form_widget(form) }}
+
+    <div class="row">
+        <div class = "col-md-12 text-center">
+            <button type="submit">Submit</button>
+        </div>
+    </div>
+            {{ form_end(form) }}
+        </div>
+    </div>
+{% endblock %}

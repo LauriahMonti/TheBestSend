@@ -8,5 +8,12 @@
         <h1>Bienvenue sur le MeilleurCoin !!</h1>
 
     </div>
+    {% for label,messages in app.flashes %}
+        {% for message in messages %}
+            <div class="alert-"{{ label }}>
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endfor %}
     </body>
 {% endblock %}
