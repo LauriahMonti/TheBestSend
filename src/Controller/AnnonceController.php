@@ -8,6 +8,7 @@ use App\Form\AdFormType;
 use App\Repository\AdRepository;
 use App\Repository\CategoryRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -18,6 +19,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class AnnonceController extends Controller
 {
     /**
+     * @IsGranted("ROLE_USER")
      * @Route("/ajouterAnnonce", name="creer")
      */
     public function ajouterAnnonce(EntityManagerInterface $entityManager, Request $request)

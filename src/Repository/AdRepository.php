@@ -24,7 +24,6 @@ class AdRepository extends ServiceEntityRepository
             SELECT a, c
             FROM App\Entity\Ad a
             INNER JOIN a.category c
-            WHERE c.name LIKE :name
         ';
 
         return $this
