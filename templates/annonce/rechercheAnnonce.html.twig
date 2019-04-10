@@ -38,6 +38,9 @@
                             <p>Titre : {{ annonce.title }}</p>
                             <p>Description : {{ annonce.description }}</p>
                             <p>Prix : {{ annonce.price }}</p>
+                            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                                <a href="{{ path('usersfavorisAjout', {id:annonce.id}) }}"><i class="fas fa-star"></i></a>
+                            {% endif %}
                             <button type="submit" ><a href="{{ path('annoncedetails', {id:annonce.id}) }}"><i class="fas fa-info-circle">Details</i></a></button>
                         </li>
 
