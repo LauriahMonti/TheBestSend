@@ -2,9 +2,12 @@
 
 namespace App\Entity;
 
+
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\AdRepository")
@@ -67,6 +70,21 @@ class Ad
      * @ORM\ManyToOne(targetEntity="App\Entity\Category", inversedBy="ads")
      */
     private $category;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="userAnnonces")
+     */
+    private $user;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\UserFavorites", mappedBy="annonce", cascade={"persist"})
+     */
+    private $userFavorites;
+
+    public function __construct()
+    {
+        $this->userFavorites = new ArrayCollection();
+    }
 
 
     public function getId(): ?int
@@ -158,6 +176,50 @@ class Ad
 
         return $this;
     }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|UserFavorites[]
+     */
+    public function getUserFavorites(): Collection
+    {
+        return $this->userFavorites;
+    }
+
+    public function addUserFavorite(UserFavorites $userFavorite): self
+    {
+        if (!$this->userFavorites->contains($userFavorite)) {
+            $this->userFavorites[] = $userFavorite;
+            $userFavorite->setAnnonce($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUserFavorite(UserFavorites $userFavorite): self
+    {
+        if ($this->userFavorites->contains($userFavorite)) {
+            $this->userFavorites->removeElement($userFavorite);
+            // set the owning side to null (unless already changed)
+            if ($userFavorite->getAnnonce() === $this) {
+                $userFavorite->setAnnonce(null);
+            }
+        }
+
+        return $this;
+    }
+
 
 
 }
