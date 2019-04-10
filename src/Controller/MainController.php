@@ -2,7 +2,9 @@
 
 namespace App\Controller;
 
+use App\Repository\AdRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class MainController extends Controller
@@ -10,10 +12,10 @@ class MainController extends Controller
     /**
      * @Route("/", name="main")
      */
-    public function index()
+    public function index(AdRepository $adRepository): Response
     {
-        return $this->render('main/index.html.twig', [
-            'controller_name' => 'MainController',
+        return $this->render('ad/index.html.twig', [
+            'ads' => $adRepository->findAll(),
         ]);
     }
     /**

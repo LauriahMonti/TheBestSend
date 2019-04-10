@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use App\Entity\Ad;
-use App\Entity\Category;
 use App\Form\AdFormType;
 use App\Repository\AdRepository;
 use App\Repository\CategoryRepository;
@@ -25,13 +24,13 @@ class AnnonceController extends Controller
     public function ajouterAnnonce(EntityManagerInterface $entityManager, Request $request)
     {
         $annonce = new Ad();
-
         $form = $this->createForm(AdFormType::class, $annonce);
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
             $annonce->setDateCreated(new \DateTime('now'));
+            $annonce->setUser($this->getUser());
             $entityManager->persist($annonce);
 
             $entityManager->flush();
