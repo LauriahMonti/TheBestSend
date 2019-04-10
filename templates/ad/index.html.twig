@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ad index{% endblock %}
+
+{% block body %}
+    <h1>Le MeilleurCoin</h1>
+    {% for label,messages in app.flashes %}
+        {% for message in messages %}
+            <div class="alert-"{{ label }}>
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endfor %}
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Description</th>
+                <th>Title</th>
+                <th>City</th>
+                <th>Zip</th>
+                <th>Price</th>
+                <th>DateCreated</th>
+                {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                <th>Details</th>
+                {% endif %}
+            </tr>
+        </thead>
+        <tbody>
+        {% for ad in ads %}
+            <tr>
+                <td>{{ ad.id }}</td>
+                <td>{{ ad.description }}</td>
+                <td>{{ ad.title }}</td>
+                <td>{{ ad.city }}</td>
+                <td>{{ ad.zip }}</td>
+                <td>{{ ad.price }}</td>
+                <td>{{ ad.dateCreated ? ad.dateCreated|date('Y-m-d') : '' }}</td>
+                {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                <td>
+                    <a href="{{ path('ad_show', {'id': ad.id}) }}"><i class="fas fa-info-circle">Voir</i></a>
+                </td>
+                {% endif %}
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="8">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
