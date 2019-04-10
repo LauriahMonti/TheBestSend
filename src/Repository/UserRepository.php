@@ -19,6 +19,41 @@ class UserRepository extends ServiceEntityRepository
         parent::__construct($registry, User::class);
     }
 
+    public function findAllJoinUser($id)
+    {
+        $dql = '
+            SELECT ad, u
+            FROM App\Entity\Ad ad
+            INNER JOIN ad.user u
+            WHERE u.id LIKE :id
+        ';
+
+        return $this
+            ->getEntityManager()
+            ->createQuery($dql)
+            ->setParameter(
+                'id',
+                '%'.$id.'%'
+            )
+            ->getResult();
+
+    }
+    public function deleteAnnonce($id)
+    {
+        $dql = '
+            DELETE *
+            FROM App\Entity\Ad ad
+            WHERE ad.id LIKE :id
+        ';
+        return $this
+            ->getEntityManager()
+            ->createQuery($dql)
+            ->setParameter(
+                'id',
+                '%'.$id.'%'
+            )
+            ->getResult();
+    }
     // /**
     //  * @return User[] Returns an array of User objects
     //  */
