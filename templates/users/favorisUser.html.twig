@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mes Favoris{% endblock %}
+{% block body %}
+    <div class="container">
+    <h1>Vos Favoris: </h1>
+    {% for favories in favoris %}
+        <li class="ann">
+            <p>Titre : {{ favories.annonce.title }}</p>
+            <p>Description : {{ favories.annonce.description }}</p>
+            <p>Prix : {{ favories.annonce.price }}</p>
+        </li>
+    {% endfor %}
+    </div>
+{% endblock %}

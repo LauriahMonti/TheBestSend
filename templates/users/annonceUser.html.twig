@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mes annonces{% endblock %}
+{% block body %}
+<div class="container">
+    <h1>mes annonces: </h1>
+    {% for annonces in annonce %}
+        <li class="ann">
+<div class = "row">
+    <div class="col-sm-10">
+                    <p>Titre : {{ annonces.title }}</p>
+                    <p>Description : {{ annonces.description }}</p>
+                    <p>Prix : {{ annonces.price }}</p>
+    </div>
+    <div class="col-sm-2">
+            <a href="{{ path('ad_edit', {'id': annonces.id}) }}">Edit</a>
+            {{ include('ad/_delete_form.html.twig') }}
+            </div>
+</div>
+
+        </li>
+
+    {% endfor %}
+
+</div>
+{% endblock %}
