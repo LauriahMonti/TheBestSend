@@ -14,7 +14,7 @@
     {% for ad in ads %}
         <div class="col-sm-3">
     <div class="card" style="width: 18rem;">
-
+        <img class="card-img-top" src="{{ asset('uploads/brochures/' ~ ad.image) }}" alt="Pas d'image disponible">
         <div class="card-body">
             <h5 class="card-title">{{ ad.title }}</h5>
             <p class="card-text">{{ ad.description }}</p>
@@ -23,7 +23,7 @@
             <p class="card-text">Prix : {{ ad.price }}€</p>
             <a class="btn btn-primary" href="{{ path('ad_show', {'id': ad.id}) }}"><i class="fas fa-info-circle"></i></a>
             {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-                <a class="btn btn-primary" href="{{ path('usersfavorisAjout', {id:ad.id}) }}"><i class="fas fa-star"></i></a>
+                    <a class="btn btn-primary" href="{{ path('usersfavorisAjout', {id:ad.id}) }}"><i class="fas fa-star"></i></a>
                 {% if app.user == ad.user %}
                 <a class="btn btn-primary" href="{{ path('ad_edit', {'id': ad.id}) }}"><i class="fas fa-edit"></i></a>
                     {{ include('ad/_delete_form.html.twig') }}
