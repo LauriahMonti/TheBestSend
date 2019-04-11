@@ -1,10 +1,20 @@
 monolog:
     handlers:
-        main:
+        request:
             type: stream
-            path: "%kernel.logs_dir%/%kernel.environment%.log"
+            path: "%kernel.logs_dir%/requetes.log"
+            level: error
+            channels: request
+            bubble: false
+        important:
+            type: stream
+            path: "%kernel.logs_dir%/important.log"
+            level: error
+            bubble: false
+        secondaire:
+            type: stream
+            path: "%kernel.logs_dir%/secondaire.log"
             level: debug
-            channels: ["!event"]
         # uncomment to get logging in your browser
         # you may have to allow bigger header sizes in your Web server configuration
         #firephp:
