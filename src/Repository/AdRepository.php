@@ -18,11 +18,30 @@ class AdRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Ad::class);
     }
+    public function search($zip)
+    {
+        $dql = '
+            SELECT ad 
+            FROM App\Entity\Ad ad 
+            WHERE ad.zip LIKE :zip
+            ORDER BY ad.dateCreated ASC
+        ';
+
+        return $this
+            ->getEntityManager()
+            ->createQuery($dql)
+            ->setParameter(
+                'zip',
+                '%'.$zip.'%'
+            )
+            ->getResult();
+
+    }
     public function searchCategory($name)
     {
         $req = $this->createQueryBuilder('ad')->select('ad')
             ->innerJoin('ad.category', 'c', 'WITH', 'c.name = :name')
-            ->setParameter('name', $name);
+            ->setParameter('name', '%'.$name.'%');
 
         return $req->getQuery()->getResult();
 
@@ -43,25 +62,7 @@ class AdRepository extends ServiceEntityRepository
             ->getResult();
 
     }
-    public function search($zip)
-    {
-        $dql = '
-            SELECT ad 
-            FROM App\Entity\Ad ad 
-            WHERE ad.zip LIKE :zip
-            ORDER BY ad.dateCreated ASC
-        ';
 
-        return $this
-            ->getEntityManager()
-            ->createQuery($dql)
-            ->setParameter(
-                'zip',
-                '%'.$zip.'%'
-            )
-            ->getResult();
-
-    }
 
     // /**
     //  * @return Ad[] Returns an array of Ad objects

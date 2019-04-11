@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\HttpFoundation\File\File;
 
 
 /**
@@ -34,9 +35,9 @@ class Ad
     /**
      * @Assert\NotBlank(message="Veuillez renseignez un titre !")
      * @Assert\Length(
-     *     min="2", max="255",
+     *     min="2", max="55",
      *     minMessage="Deux caractères minimum",
-     *     maxMessage="255 caractères maximum"
+     *     maxMessage="55 caractères maximum"
      * )
      * @ORM\Column(type="string", length=255)
      */
@@ -56,7 +57,7 @@ class Ad
 
     /**
      * @Assert\NotBlank(message="Veuillez renseignez un prix !")
-     * @Assert\Type(type="float", message="Renseignez un nombre OK")
+     * @Assert\Type(type="float", message="Renseignez un prix OK")
      * @ORM\Column(type="float")
      */
     private $price;
@@ -81,11 +82,16 @@ class Ad
      */
     private $userFavorites;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $image;
+
+
     public function __construct()
     {
         $this->userFavorites = new ArrayCollection();
     }
-
 
     public function getId(): ?int
     {
@@ -216,6 +222,18 @@ class Ad
                 $userFavorite->setAnnonce(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getImage(): ?string
+    {
+        return $this->image;
+    }
+
+    public function setImage(?string $image): self
+    {
+        $this->image = $image;
 
         return $this;
     }

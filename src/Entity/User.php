@@ -7,10 +7,11 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
- * @UniqueEntity(fields={"username"}, message="There is already an account with this username")
+ * @UniqueEntity(fields={"username"}, message="Username deja utilisé")
  */
 class User implements UserInterface
 {
@@ -22,6 +23,8 @@ class User implements UserInterface
     private $id;
 
     /**
+     * @Assert\NotBlank(message="Veuillez renseignez un username !")
+     * Assert\Type(type="string")
      * @ORM\Column(type="string", length=180, unique=true)
      */
     private $username;
@@ -32,12 +35,22 @@ class User implements UserInterface
     private $roles = [];
 
     /**
+     * @Assert\NotBlank(message="Veuillez renseignez un mot de passe !")
+     * @Assert\Length(
+     *     min="6", max="18",
+     *     minMessage="Six caractères minimum.",
+     *     maxMessage="18 caractères maximum")
      * @var string The hashed password
      * @ORM\Column(type="string")
      */
     private $password;
 
     /**
+     * @Assert\Email(
+     *     message = "L'email '{{ value }}' n'es pas un email valide",
+     *     checkMX = true)
+     * @Assert\NotBlank(message="Veuillez renseignez un email !")
+     *  Assert\Type(type="email")
      * @ORM\Column(type="string", length=55)
      */
     private $email;
@@ -57,12 +70,19 @@ class User implements UserInterface
      */
     private $userFavorites;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $salt;
+
+
 
 
     public function __construct()
     {
         $this->userAnnonces = new ArrayCollection();
         $this->userFavorites = new ArrayCollection();
+        $this->salt = md5(uniqid(rand(), true));
     }
 
     public function getId(): ?int
@@ -220,6 +240,13 @@ class User implements UserInterface
                 $userFavorite->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    public function setSalt(string $salt): self
+    {
+        $this->salt = $salt;
 
         return $this;
     }
