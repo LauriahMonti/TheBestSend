@@ -20,19 +20,12 @@ class AdRepository extends ServiceEntityRepository
     }
     public function searchCategory($name)
     {
-        $dql = '
-            SELECT a, c
-            FROM App\Entity\Ad a
-            INNER JOIN a.category c
-        ';
+        $req = $this->createQueryBuilder('ad')->select('ad')
+            ->innerJoin('ad.category', 'c', 'WITH', 'c.name = :name')
+            ->setParameter('name', $name);
 
-        return $this
-            ->getEntityManager()
-            ->createQuery($dql)
-            ->setParameter(
-                'name',
-                '%'.$name.'%')
-            ->getResult();
+        return $req->getQuery()->getResult();
+
 
     }
 

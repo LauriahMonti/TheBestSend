@@ -8,7 +8,7 @@
             <form id="zip" action ="{{  path('annoncesearchZip')}}">
                 <div class="form-group">
                     <label for="zip"><i class="fas fa-search"></i>Votre recherche : </label>
-                    <input type="text" class="form-control" id="zip" name="zip">
+                    <input type="text" class="form-control" id="search" name="search">
                 </div>
                 <div class="row">
                 <div class = "col-md-12 text-center">
@@ -32,16 +32,19 @@
             </form>#}
         </div>
             <div>
+                {% if not annonces %}
+                <p>Nous n'avons trouvés aucun résultat !</p>
+                {% endif %}
                 <ul>
                     {% for annonce in annonces %}
                         <li class="ann">
                             <p>Titre : {{ annonce.title }}</p>
                             <p>Description : {{ annonce.description }}</p>
-                            <p>Prix : {{ annonce.price }}</p>
+                            <p>Prix : {{ annonce.price }}€</p>
                             {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-                                <a href="{{ path('usersfavorisAjout', {id:annonce.id}) }}"><i class="fas fa-star"></i></a>
+                                <a class="btn btn-primary" href="{{ path('usersfavorisAjout', {id:annonce.id}) }}"><i class="fas fa-star"></i></a>
                             {% endif %}
-                            <button type="submit" ><a href="{{ path('annoncedetails', {id:annonce.id}) }}"><i class="fas fa-info-circle">Details</i></a></button>
+                            <button type="submit" class="btn btn-primary"><a href="{{ path('annoncedetails', {id:annonce.id}) }}"><i class="fas fa-info-circle"> Details</i></a></button>
                         </li>
 
                     {% endfor %}

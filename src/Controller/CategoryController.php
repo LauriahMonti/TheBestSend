@@ -53,6 +53,10 @@ class CategoryController extends Controller
      */
     public function show(Category $category): Response
     {
+        if (!$category)
+        {
+            throw $this->createNotFoundException("Attention! Cette catégorie n'existe pas");
+        }
         return $this->render('category/show.html.twig', [
             'category' => $category,
         ]);
@@ -85,6 +89,10 @@ class CategoryController extends Controller
      */
     public function delete(Request $request, Category $category): Response
     {
+        if (!$category)
+        {
+            throw $this->createNotFoundException("Attention! Cette catégorie n'existe pas");
+        }
         if ($this->isCsrfTokenValid('delete'.$category->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($category);

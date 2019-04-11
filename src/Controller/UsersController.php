@@ -15,22 +15,12 @@ use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 /**
- * @Route("/users_", name="users")
+ * @Route("/users", name="users")
  */
 class UsersController extends Controller
 {
-    /**
-     * @Route("/users", name="users")
-     */
-    public function index()
-    {
-        return $this->render('users/index.html.twig', [
-            'controller_name' => 'UsersController',
-        ]);
-    }
 
     /**
-     * @IsGranted("ROLE_USER")
      * @Route("/mesAnnonces/{id}", name="annoncesUsers",  methods={"GET"})
      */
 
@@ -55,19 +45,6 @@ class UsersController extends Controller
         session_abort();
 
         return $this->redirectToRoute('app_logout');
-    }
-    /**
-     * @Route("/{id}", name = "annonceDelete", methods={"DELETE"})
-     */
-    public function delete(Request $request, Ad $ad): Response
-    {
-        if ($this->isCsrfTokenValid('delete'.$ad->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($ad);
-            $entityManager->flush();
-        }
-        $this->addFlash("success", "Annonce supprimé avec succes !");
-        return $this->redirectToRoute('main');
     }
     /**
      * @Route("/ajoutFavoris", name="favorisAjout")
@@ -99,12 +76,41 @@ class UsersController extends Controller
         $favorite = $entityManager
             ->getRepository(UserFavorites::class)
             ->showFavorite($user->getId());
-        dump($favorite);
 
         return $this->render('users/favorisUser.html.twig', [
             'favoris'=> $favorite,
         ]);
     }
+    /**
+     * @Route("/{id}", name="favorisDelete", methods={"DELETE"})
+     */
+    public function delete(Request $request, UserFavorites $userFavorite): Response
+    {
+        if ($this->isCsrfTokenValid('delete'.$userFavorite->getId(), $request->request->get('_token'))) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->remove($userFavorite);
+            $entityManager->flush();
+            $this->addFlash("success", "Favoris supprimé !");
+        }
 
+        return $this->redirectToRoute('main');
+    }
+
+    /**
+     * @Route("/{id}", name="annonceDelete", methods={"DELETE"})
+     * @param Request $request
+     * @param Ad $ad
+     * @return Response
+     */
+    public function deleteAnnonce(Request $request, Ad $ad): Response
+    {
+        if ($this->isCsrfTokenValid('delete'.$ad->getId(), $request->request->get('_token'))) {
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->remove($ad);
+        $entityManager->flush();
+    }
+
+    return $this->redirectToRoute('main');
+}
 
 }

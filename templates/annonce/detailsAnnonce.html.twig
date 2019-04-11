@@ -18,5 +18,7 @@
          <p>Categorie : {{ annonce.category }}</p>
         <br>
         <p>Date de mis en ligne : {{ annonce.dateCreated|date('d/m/Y') }}</p>
+        <a class ="no_white" href="{{ path('annoncerecherche') }}"><i class="fas fa-arrow-left"></i> Retour</a>
     </div>
+
 {% endblock %}

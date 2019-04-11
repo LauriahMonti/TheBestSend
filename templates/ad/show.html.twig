@@ -3,21 +3,14 @@
 {% block title %}Ad{% endblock %}
 
 {% block body %}
-    <h1>Ad</h1>
+    <div class="container">
+    <h1>Detail de l'annonce {{ ad.title }}</h1>
 
     <table class="table">
         <tbody>
             <tr>
-                <th>Id</th>
-                <td>{{ ad.id }}</td>
-            </tr>
-            <tr>
                 <th>Description</th>
                 <td>{{ ad.description }}</td>
-            </tr>
-            <tr>
-                <th>Title</th>
-                <td>{{ ad.title }}</td>
             </tr>
             <tr>
                 <th>City</th>
@@ -29,7 +22,7 @@
             </tr>
             <tr>
                 <th>Price</th>
-                <td>{{ ad.price }}</td>
+                <td>{{ ad.price }} €</td>
             </tr>
             <tr>
                 <th>DateCreated</th>
@@ -37,9 +30,8 @@
             </tr>
         </tbody>
     </table>
+    <a class ="no_white" href="{{ path('ad_index') }}"><i class="fas fa-arrow-left"></i> Retour</a>
 
-    <a href="{{ path('ad_index') }}">back to list</a>
-
-
+    </div>
 
 {% endblock %}

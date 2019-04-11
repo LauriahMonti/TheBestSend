@@ -20,10 +20,6 @@ class AdType extends AbstractType
             ->add('city')
             ->add('zip')
             ->add('price')
-            ->add('dateCreated', DateType::class, [
-                'widget' => 'single_text',
-                'format' => 'yyyy-MM-dd',
-            ])
             ->add('category',EntityType::class, [
                 'class' => Category::class,
                 'choice_label' => 'name',

@@ -3,7 +3,7 @@
 {% block title %}Mes annonces{% endblock %}
 {% block body %}
 <div class="container">
-    <h1>mes annonces: </h1>
+    <h1>Mes annonces: </h1>
     {% for annonces in annonce %}
         <li class="ann">
 <div class = "row">
@@ -13,8 +13,8 @@
                     <p>Prix : {{ annonces.price }}</p>
     </div>
     <div class="col-sm-2">
-            <a href="{{ path('ad_edit', {'id': annonces.id}) }}">Edit</a>
-            {{ include('ad/_delete_form.html.twig') }}
+            <a class="btn btn-primary" href="{{ path('ad_edit', {'id': annonces.id}) }}"><i class="fas fa-edit"></i></a>
+            {{ include('users/_delete_form_annonce.html.twig') }}
             </div>
 </div>
 

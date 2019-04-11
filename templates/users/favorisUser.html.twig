@@ -9,6 +9,7 @@
             <p>Titre : {{ favories.annonce.title }}</p>
             <p>Description : {{ favories.annonce.description }}</p>
             <p>Prix : {{ favories.annonce.price }}</p>
+            {{ include('users/_delete_form_favoris.html.twig') }}
         </li>
     {% endfor %}
     </div>

@@ -54,8 +54,16 @@ class AnnonceController extends Controller
         $annonces = $entityManager
             ->getRepository(Ad::class)
             ->findAllJoinCategory();
-        dump($annonces);
+        if(!$annonces)
+        {
+            throw $this->createNotFoundException('Annonce non trouvé');
+        }
         $categories = $category->findAll();
+        if (!$categories)
+        {
+            throw $this->createNotFoundException('Catégorie non trouvé');
+        }
+
 
         return $this->render('annonce/rechercheAnnonce.html.twig', [
             'annonces'=> $annonces,
@@ -67,34 +75,33 @@ class AnnonceController extends Controller
     /**
      * @Route("/details/{id}", name = "details", requirements={"id"="\d+"})
      */
-    public function detailsAnnonce(Ad $annonce, EntityManagerInterface $entityManager)
+    public function detailsAnnonce(Ad $annonce)
     {
+        if (!$annonce)
+        {
+            throw $this->createNotFoundException("Attention! Cet annonce n'existe pas!");
+        }
         return $this->render('annonce/detailsAnnonce.html.twig', compact('annonce'));
     }
 
     /**
      * @Route("/filter/cp", name ="searchZip")
-     * @param AdRepository $adR
-     * @param Request $request
-     * @return \Symfony\Component\HttpFoundation\Response
-     *
      */
     public function searchByCp(AdRepository $adR, Request $request)
     {
-
         $annonces = $adR
-            ->search($request->get('zip'));
-
-
+            ->search($request->get('search'));
         return $this->render('annonce/rechercheAnnonce.html.twig', compact('annonces'));
     }
 
     /**
-     * @Route("filter/category", name="viewCat")
+     * @Route("/filter/cp", name="searchZip")
      */
-    public function vueByCategory(CategoryRepository $categorie, Request $request)
+    public function searchByCategory(AdRepository $adR, Request $request)
     {
-        $annonces = $categorie->searchCategory($request->get('category'));
+        $annonces = $adR
+            ->searchCategory($request->get('search'));
+
         return $this->render('annonce/rechercheAnnonce.html.twig', compact('annonces'));
     }
 }

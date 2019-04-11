@@ -7,3 +7,50 @@ h1{
     border-radius: 15px;
     padding: 10px;
 }
+li{
+    list-style-type: none;
+}
+.ann{
+    border: #0f6674 1px solid;
+    border-radius: 10px;
+    padding: 10px;
+    margin: 10px;
+}
+.nav{
+    background: black;
+}
+.jumbotron{
+    background-image: linear-gradient(to right bottom, #051937, #002c47, #003d42, #004a2a, #3d530a);
+}
+.lead{
+    color: #8fd19e;
+}
+.display-4{
+    color: #8fd19e;
+}
+.btn{
+    background-image: linear-gradient(to right bottom, #051937, #004b75, #00828c, #00b770, #abe12e);
+}
+a{
+    color: white;
+    text-decoration: none;
+}
+#login .container #login-row #login-column #login-box {
+    margin-top: 120px;
+    max-width: 600px;
+    border: 1px solid #9C9C9C;
+    background-image: linear-gradient(to right bottom, #051937, #004b75, #00828c, #00b770, #abe12e);
+}
+#login .container #login-row #login-column #login-box #login-form {
+    padding: 20px;
+}
+#login .container #login-row #login-column #login-box #login-form #register-link {
+    margin-top: -85px;
+}
+.label_form
+{
+    color: #8fd19e;
+}
+.no_white{
+    color: #004b75;
+}

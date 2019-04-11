@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Ad;
 use App\Form\AdType;
 use App\Repository\AdRepository;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -26,6 +27,7 @@ class AdController extends Controller
     }
 
     /**
+     * @IsGranted("ROLE_USER")
      * @Route("/new", name="ad_new", methods={"GET","POST"})
      */
     public function new(Request $request): Response
@@ -61,6 +63,7 @@ class AdController extends Controller
     }
 
     /**
+     * @IsGranted("ROLE_USER")
      * @Route("/{id}/edit", name="ad_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, Ad $ad): Response
@@ -83,6 +86,7 @@ class AdController extends Controller
     }
 
     /**
+     * @IsGranted("ROLE_USER")
      * @Route("/{id}", name="ad_delete", methods={"DELETE"})
      */
     public function delete(Request $request, Ad $ad): Response

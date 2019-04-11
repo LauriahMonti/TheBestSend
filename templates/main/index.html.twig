@@ -4,9 +4,11 @@
 
 {% block body %}
     <body>
-    <div class="container">
-        <h1>Bienvenue sur le MeilleurCoin !!</h1>
-
+    <div class="jumbotron jumbotron-fluid">
+        <div class="container">
+            <h1 class="display-4">Le meilleur coin</h1>
+            <p class="lead">Site d'annonce</p>
+        </div>
     </div>
     {% for label,messages in app.flashes %}
         {% for message in messages %}

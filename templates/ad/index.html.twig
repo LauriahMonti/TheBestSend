@@ -3,50 +3,36 @@
 {% block title %}Ad index{% endblock %}
 
 {% block body %}
-    <h1>Le MeilleurCoin</h1>
-    {% for label,messages in app.flashes %}
-        {% for message in messages %}
-            <div class="alert-"{{ label }}>
-                {{ message }}
+    <div class="jumbotron jumbotron-fluid">
+        <div class="container">
+            <h1 class="display-4">Le meilleur coin</h1>
+            <p class="lead">Site d'annonce</p>
+        </div>
+    </div>
+    <div class="row">
+
+    {% for ad in ads %}
+        <div class="col-sm-3">
+    <div class="card" style="width: 18rem;">
+
+        <div class="card-body">
+            <h5 class="card-title">{{ ad.title }}</h5>
+            <p class="card-text">{{ ad.description }}</p>
+            <p class="card-text">Ville : {{ ad.city }}</p>
+            <p class="card-text">Code Postal : {{ ad.zip }}</p>
+            <p class="card-text">Prix : {{ ad.price }}€</p>
+            <a class="btn btn-primary" href="{{ path('ad_show', {'id': ad.id}) }}"><i class="fas fa-info-circle"></i></a>
+            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                <a class="btn btn-primary" href="{{ path('usersfavorisAjout', {id:ad.id}) }}"><i class="fas fa-star"></i></a>
+                {% if app.user == ad.user %}
+                <a class="btn btn-primary" href="{{ path('ad_edit', {'id': ad.id}) }}"><i class="fas fa-edit"></i></a>
+                    {{ include('ad/_delete_form.html.twig') }}
+                {% endif %}
+            {% endif %}
+        </div>
+    </div>
             </div>
-        {% endfor %}
+
     {% endfor %}
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Description</th>
-                <th>Title</th>
-                <th>City</th>
-                <th>Zip</th>
-                <th>Price</th>
-                <th>DateCreated</th>
-                {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-                <th>Details</th>
-                {% endif %}
-            </tr>
-        </thead>
-        <tbody>
-        {% for ad in ads %}
-            <tr>
-                <td>{{ ad.id }}</td>
-                <td>{{ ad.description }}</td>
-                <td>{{ ad.title }}</td>
-                <td>{{ ad.city }}</td>
-                <td>{{ ad.zip }}</td>
-                <td>{{ ad.price }}</td>
-                <td>{{ ad.dateCreated ? ad.dateCreated|date('Y-m-d') : '' }}</td>
-                {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-                <td>
-                    <a href="{{ path('ad_show', {'id': ad.id}) }}"><i class="fas fa-info-circle">Voir</i></a>
-                </td>
-                {% endif %}
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="8">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+    </div>
 {% endblock %}
